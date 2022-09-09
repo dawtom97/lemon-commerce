@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "../../atoms/Button";
+import Logo from "../../atoms/Logo";
 import { Paragraph } from "../../atoms/Paragraph";
 import * as Styled from "./styles";
 
@@ -15,6 +16,7 @@ const AuthBanner = ({onClick,isRegister}:Props) => {
         <Styled.Blur />
 
         <div>
+          <Logo/>
           <Paragraph isCustomSize="2" isBold>
             We are
           </Paragraph>
