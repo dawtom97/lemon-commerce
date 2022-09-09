@@ -14,7 +14,7 @@ const Auth = () => {
 
   return (
     <Wrapper>
-        <AuthBanner/>
+        <AuthBanner isRegister={isRegister} onClick={()=>setIsRegister(prev=>!prev)}/>
         {isRegister ? null : <LoginForm/>}
     </Wrapper>
   )

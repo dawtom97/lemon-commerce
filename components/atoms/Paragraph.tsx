@@ -5,13 +5,15 @@ interface Props {
   isThin?: boolean;
   isBold?: boolean;
   isLarge?: boolean;
+  isCustomSize?: string;
 }
 
 const SMALL = css`
-  font-size: 12px;
+  font-size: 14px;
 `;
 const LARGE = css`
-  font-size: 18px;
+  font-size: 34px;
+  margin:5px 0;
 `;
 const THIN = css`
   font-weight: 300;
@@ -21,10 +23,11 @@ const BOLD = css`
 `;
 
 export const Paragraph = styled.p<Props>`
-  font-size: 16px;
+  font-size: ${({isCustomSize}) => isCustomSize ? `${isCustomSize}rem` : '1.6rem'};
   color:#fff;
   ${({ isSmall }) => isSmall && SMALL}
   ${({ isLarge }) => isLarge && LARGE}
   ${({ isThin }) => isThin && THIN}
   ${({ isBold }) => isBold && BOLD}
+
 `;
