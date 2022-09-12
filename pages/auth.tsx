@@ -6,7 +6,7 @@ import AuthTemplate from "../components/templates/AuthTemplate/AuthTemplate";
 
 const Wrapper = styled.main`
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
 
   @media (min-width: 992px) {
     flex-direction: row;
@@ -19,11 +19,11 @@ const Auth = () => {
   return (
     <AuthTemplate>
       <Wrapper>
+        <AuthForm isRegister={isRegister} />
         <AuthBanner
           isRegister={isRegister}
           onClick={() => setIsRegister((prev) => !prev)}
         />
-        <AuthForm isRegister={isRegister} />
       </Wrapper>
     </AuthTemplate>
   );

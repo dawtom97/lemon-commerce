@@ -2,7 +2,7 @@ import styled from "styled-components";
 import React from 'react';
 
 const Wrapper = styled.div`
-    color: #fff;
+    color: #1f1f1f;
     font-size: 1.6rem;
     font-weight: 300;
     position: relative;
@@ -16,7 +16,7 @@ const Wrapper = styled.div`
     height: 100%;
     top: 0;
     left: 0;
-    background: rgb(145 145 145 / 28%);
+    background: rgb(207 207 207 / 59%);
     position: absolute;
     content: "";
     z-index: -1;

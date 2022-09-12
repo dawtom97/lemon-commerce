@@ -24,7 +24,7 @@ const BOLD = css`
 
 export const Paragraph = styled.p<Props>`
   font-size: ${({isCustomSize}) => isCustomSize ? `${isCustomSize}rem` : '1.6rem'};
-  color:#fff;
+  color:#1f1f1f;
   ${({ isSmall }) => isSmall && SMALL}
   ${({ isLarge }) => isLarge && LARGE}
   ${({ isThin }) => isThin && THIN}
