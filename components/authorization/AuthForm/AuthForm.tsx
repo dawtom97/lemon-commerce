@@ -42,7 +42,7 @@ const AuthForm = ({ isRegister, onSubmit }: Props) => {
       </Heading>
       <div>
         <FormikStepper initialValues={initialValues} onSubmit={() => {}}>
-          <FormikStep >
+          <FormikStep validationSchema={basicSchema}>
             <Field name="firstname" label="First Name" />
             <Field name="lastname" label="Last Name" />
             <Field
@@ -89,6 +89,7 @@ export const FormikStepper = ({
       {...props}
       validationSchema={currentChild.props.validationSchema}
       onSubmit={async (values: any, helpers: any) => {
+        console.log(values,helpers)
         if (step === childrenArray.length - 1) {
           await props.onSubmit(values, helpers);
         } else {
@@ -96,13 +97,17 @@ export const FormikStepper = ({
         }
       }}
     >
+      {({errors}:any) => (
       <Form autoComplete="off">
-        {currentChild}
-        {step > 0 ? (
-          <button onClick={() => setStep((prev) => prev - 1)}>Back</button>
-        ) : null}
-        <button type="submit">{isLastStep() ? "Submit" : "Next"}</button>
-      </Form>
+      {currentChild}
+      {errors ? JSON.stringify(errors) : null}
+      {step > 0 ? (
+        <button onClick={() => setStep((prev) => prev - 1)}>Back</button>
+      ) : null}
+      <button type="submit">{isLastStep() ? "Submit" : "Next"}</button>
+    </Form>
+      )}
+
     </Formik>
   );
 };
