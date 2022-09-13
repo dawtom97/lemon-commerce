@@ -1,113 +1,71 @@
-import {
-  Field,
-  Form,
-  Formik,
-  FormikConfig,
-  FormikValues,
-  useFormik,
-} from "formik";
+import { Formik, FormikHelpers } from "formik";
 import React, { useState } from "react";
-import { basicSchema } from "../../../schemas";
+import { registerSchema } from "../../../schemas";
 import { Heading } from "../../atoms/Heading";
+import MyFormikField from "../../atoms/MyFormikField";
 import * as Styled from "./styles";
 
 interface Props {
   isRegister: boolean;
-  onSubmit: any;
 }
 
-interface FormValues {
-  email: string;
-  age: string;
-  password: string;
-  confirmPassword: string;
+interface InitialValuesProps {
+  firstname: String | any;
+  lastname: String;
+  email: String;
+  password: String;
+  confirmPassword: String;
 }
-
-const TextField = () => <input />;
-const Checkbox = () => <input type="checkbox" />;
 
 const initialValues = {
   firstname: "",
   lastname: "",
-  millionaire: false,
-  money: 1000,
-  description: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
 };
 
-const AuthForm = ({ isRegister, onSubmit }: Props) => {
+const AuthForm = ({ isRegister}: Props) => {
+
+
+  const handleSubmit = (
+    values: InitialValuesProps,
+    actions: FormikHelpers<InitialValuesProps>
+  ) => {
+    console.log("co jest xd");
+    setTimeout(() => {
+      alert(JSON.stringify(values, null, 2));
+      actions.setSubmitting(false);
+    }, 1000);
+  };
+
   return (
     <Styled.Wrapper>
       <Heading isLarge level="h1">
         {isRegister ? "Sign up" : "Sign in"}
       </Heading>
       <div>
-        <FormikStepper initialValues={initialValues} onSubmit={() => {}}>
-          <FormikStep validationSchema={basicSchema}>
-            <Field name="firstname" label="First Name" />
-            <Field name="lastname" label="Last Name" />
-            <Field
-              name="millionaire"
-              type="checkbox"
-              label="Im a millionaire"
-            />
-          </FormikStep>
-          <FormikStep >
-            <Field name="money" type="number" label="Money" />
-          </FormikStep>
-
-          <FormikStep >
-            <Field name="description" label="Description" />
-          </FormikStep>
-        </FormikStepper>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={registerSchema}
+          onSubmit={(values, actions: FormikHelpers<InitialValuesProps>) =>
+            handleSubmit(values, actions)
+          }
+        >
+          {(props) => (
+            <form onSubmit={props.handleSubmit}>
+               <MyFormikField name="firstname" type="text" label="First Name"/>
+               <MyFormikField name="lastname" type="text" label="Last Name"/>
+               <MyFormikField name="email" type="email" label="Email Address"/>
+               <MyFormikField name="password" type="password" label="Password"/>
+               <MyFormikField name="confirmPassword" type="password" label="Confirm Password"/>
+               <button type="submit">{props.isSubmitting ? "Submitting" : "Submit"}</button>
+            </form>
+          )}
+        </Formik>
       </div>
     </Styled.Wrapper>
   );
 };
 
 export default AuthForm;
-
-interface FormikStepProps
-  extends Pick<FormikConfig<FormikValues>, "children" | "validationSchema"> {}
-
-export const FormikStep = ({ children }: FormikStepProps) => {
-  return <>{children}</>;
-};
-
-export const FormikStepper = ({
-  children,
-  ...props
-}: FormikConfig<FormValues> | any) => {
-  const childrenArray = React.Children.toArray(children) as React.ReactElement<FormikStepProps>[];
-  const [step, setStep] = useState(0);
-  const currentChild = childrenArray[step];
-  console.log(currentChild.props)
-
-  const isLastStep = () => step === childrenArray.length - 1;
-
-  return (
-    <Formik
-      {...props}
-      validationSchema={currentChild.props.validationSchema}
-      onSubmit={async (values: any, helpers: any) => {
-        console.log(values,helpers)
-        if (step === childrenArray.length - 1) {
-          await props.onSubmit(values, helpers);
-        } else {
-          setStep((prev) => prev + 1);
-        }
-      }}
-    >
-      {({errors}:any) => (
-      <Form autoComplete="off">
-      {currentChild}
-      {errors ? JSON.stringify(errors) : null}
-      {step > 0 ? (
-        <button onClick={() => setStep((prev) => prev - 1)}>Back</button>
-      ) : null}
-      <button type="submit">{isLastStep() ? "Submit" : "Next"}</button>
-    </Form>
-      )}
-
-    </Formik>
-  );
-};
