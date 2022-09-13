@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 
 export const apolloClient = new ApolloClient({
-    uri: 'https://flyby-gateway.herokuapp.com/',
+    uri: 'http://185.200.44.108/graphql',
     cache: new InMemoryCache(),
 });
