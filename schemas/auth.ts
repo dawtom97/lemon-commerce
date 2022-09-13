@@ -9,5 +9,10 @@ export const registerSchema = object().shape({
     lastname:string().matches(letterRules,{message:"Last Name should have only letters"}).required("Required"),
     email:string().email("Please enter a valid email").required("Required"),
     password: string().min(5).matches(passwordRules, {message:"Please create a stronger password"}).required("Required"),
-    confirmPassword: string().oneOf([ref('password'), null]),
+    confirmPassword: string().oneOf([ref('password'), null]).required("Required"),
+})
+
+export const loginSchema = object().shape({
+    email:string().email("Please enter a valid email").required("Required"),
+    password: string().required("Required"),
 })

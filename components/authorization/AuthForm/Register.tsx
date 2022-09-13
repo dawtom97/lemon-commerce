@@ -1,9 +1,10 @@
 import { Formik, FormikHelpers } from "formik";
 import React from "react";
-import { registerSchema } from "../../../schemas";
+import { registerSchema } from "../../../schemas/auth";
 import MyFormikField from "../../atoms/MyFormikField";
 import { InitialValuesProps } from "./types";
 import { useCreateUser } from "../../../hooks/useCreateUser";
+import { useRouter } from "next/router";
 
 const initialValues = {
   firstname: "",
@@ -15,16 +16,16 @@ const initialValues = {
 
 const Register = () => {
   const { handleSubmit, data, loading, error } = useCreateUser();
-
-  if (error) return "Error";
+  const router = useRouter();
 
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={registerSchema}
-      onSubmit={(values, actions: FormikHelpers<InitialValuesProps>) => {
-        handleSubmit(values, actions);
+      onSubmit={async (values, actions: FormikHelpers<InitialValuesProps>) => {
+        handleSubmit(values);
         actions.resetForm();
+        router.push("/");
       }}
     >
       {(props) => (

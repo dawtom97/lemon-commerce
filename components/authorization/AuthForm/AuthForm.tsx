@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Heading } from "../../atoms/Heading";
+import Login from "./Login";
 import Register from "./Register";
 import * as Styled from "./styles";
 import { AuthProps } from "./types";
@@ -11,7 +12,7 @@ const AuthForm = ({ isRegister }: AuthProps) => {
         {isRegister ? "Sign up" : "Sign in"}
       </Heading>
       <div>
-        <Register />
+        {isRegister ? <Register /> : <Login/>}
       </div>
     </Styled.Wrapper>
   );
