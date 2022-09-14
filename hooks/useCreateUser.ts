@@ -1,5 +1,6 @@
 import { useMutation } from "@apollo/client";
 import { CREATE_USER } from "../apollo/mutations/createUser";
+import { GENERATE_TOKEN } from "../apollo/mutations/generateToken";
 
 interface UserProps {
     firstname: String;
@@ -10,11 +11,12 @@ interface UserProps {
 
 export const useCreateUser = () => {
     const [createCustomer, { data, loading, error }] = useMutation(CREATE_USER);
+    const [generateToken] = useMutation(GENERATE_TOKEN);
 
-    const handleSubmit = (
+    const createUser = async (
         values: UserProps,
     ) => {
-        createCustomer({
+        await createCustomer({
             errorPolicy: "all",
             variables: {
                 firstname: values.firstname,
@@ -23,10 +25,18 @@ export const useCreateUser = () => {
                 password: values.password,
             },
         });
+        const res = await generateToken({
+            variables: {
+                email: values.email,
+                password: values.password
+            }
+        })
+        localStorage.setItem("token", res.data.generateCustomerToken.token);
+        console.log(res);
     };
 
     return {
-        handleSubmit,
+        createUser,
         data,
         error,
         loading

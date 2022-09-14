@@ -12,9 +12,9 @@ const initialValues = {
 };
 
 const Login = () => {
-  const { handleLogin, data, loading, error } = useGenerateToken();
+  const { handleLogin, token, loading, error } = useGenerateToken();
   const router = useRouter();
-  
+
   return (
     <Formik
       initialValues={initialValues}

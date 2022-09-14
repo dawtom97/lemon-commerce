@@ -15,7 +15,7 @@ const initialValues = {
 };
 
 const Register = () => {
-  const { handleSubmit, data, loading, error } = useCreateUser();
+  const { createUser, data, loading, error } = useCreateUser();
   const router = useRouter();
 
   return (
@@ -23,7 +23,7 @@ const Register = () => {
       initialValues={initialValues}
       validationSchema={registerSchema}
       onSubmit={async (values, actions: FormikHelpers<InitialValuesProps>) => {
-        handleSubmit(values);
+        createUser(values);
         actions.resetForm();
         router.push("/");
       }}

@@ -8,23 +8,23 @@ interface TokenProps {
 }
 
 export const useGenerateToken = () => {
-    const [generateToken, {data,loading,error}] = useMutation(GENERATE_TOKEN);
+    const [generateToken, {data:token,loading,error}] = useMutation(GENERATE_TOKEN);
     const {data:user} = useLoginUser();
    
     const handleLogin = async (values:TokenProps) => {
-        const {data} = await generateToken({
+        const token = await generateToken({
             variables: {
                 email: values.email,
                 password: values.password
             }
         })
-        localStorage.setItem("token", data.generateCustomerToken.token);
+        localStorage.setItem("token", token.data.generateCustomerToken.token);
         console.log(user)
 
     };
     return {
         handleLogin,
-        data,
+        token,
         error,
         loading
     }
