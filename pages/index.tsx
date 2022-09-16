@@ -2,18 +2,20 @@ import { useApolloClient } from '@apollo/client'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 import { GENERATE_TOKEN } from '../apollo/mutations/generateToken'
 import { useLoginUser } from '../hooks/useLoginUser'
+import { useLogout } from '../hooks/useLogout'
 import styles from '../styles/Home.module.css'
 
 
 const Home: NextPage | any = () => {
-
   const {data,loading} = useLoginUser();
-  const client = useApolloClient();
+  const {logout} = useLogout();
+
+  console.log(data,loading)
 
   if(loading) return "Loading..."
-  console.log(client)
 
   return (
     <div className={styles.container}>
@@ -24,14 +26,9 @@ const Home: NextPage | any = () => {
       </Head>
 
       <h1>STRONA GłÓWNA</h1>
-      <button onClick={()=>{
-      // client.resetStore();
-       client.cache.reset()
-       localStorage.setItem("token","");
-       console.log(localStorage.getItem("token"))
-      }}>Wyloguj</button>
+      <button onClick={logout}>Wyloguj</button>
 
-      {data && <p>{data.customer.firstname}</p>}
+      {data && <p>{data?.customer?.firstname}</p>}
 
     </div>
   )

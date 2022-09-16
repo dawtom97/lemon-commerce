@@ -19,10 +19,10 @@ const Login = () => {
     <Formik
       initialValues={initialValues}
       validationSchema={loginSchema}
-      onSubmit={async (values, actions: FormikHelpers<InitialLoginProps>) => {
+      onSubmit={async(values, actions: FormikHelpers<InitialLoginProps>) => {
         await handleLogin(values);
         actions.resetForm();
-        router.push("/");
+        router.push("/");   
       }}
     >
       {(props) => (

@@ -1,5 +1,6 @@
 import {useMutation} from "@apollo/client";
 import { GENERATE_TOKEN } from "../apollo/mutations/generateToken";
+import { LOGIN_USER } from "../apollo/queries/loginUser";
 import { useLoginUser } from "./useLoginUser";
 
 interface TokenProps {
@@ -8,7 +9,9 @@ interface TokenProps {
 }
 
 export const useGenerateToken = () => {
-    const [generateToken, {data:token,loading,error}] = useMutation(GENERATE_TOKEN);
+    const [generateToken, {data:token,loading,error}] = useMutation(GENERATE_TOKEN,{
+      //  refetchQueries:[{query:LOGIN_USER}]
+    });
     const {data:user} = useLoginUser();
    
     const handleLogin = async (values:TokenProps) => {

@@ -6,18 +6,8 @@ const httpLink = createHttpLink({
   credentials: 'include'
 });
 
-// const authLink = setContext((request, previousContext) => {
-//   return {
-//     headers: {
-//       ...previousContext.headers,
-//       Authorization: `Bearer ${localStorage.getItem(config.localStorage)}`,
-//     },
-//   };
-// });
-
 const authLink = setContext((request,previousContext) => {
   const token = localStorage.getItem('token');
-  // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...previousContext.headers,
